@@ -1,6 +1,3 @@
-require "./surface"
-
-@[Link("SDL2")]
 lib LibSDL
 
   WINDOWPOS_UNDEFINED = 0x1FFF0000

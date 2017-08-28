@@ -1,7 +1,3 @@
-require "./video"
-require "./pixels"
-
-@[Link("SDL2")]
 lib LibSDL
   struct Surface
     __flags : UInt32
@@ -16,4 +12,6 @@ lib LibSDL
   end
 
   fun fill_rect = SDL_FillRect(dst : Surface*, rect : Rect*, color : UInt32) : Int32
+  fun blit_surface = SDL_UpperBlit(src : Surface*, srcrect : Rect*, dst : Surface*, dstrect : Rect*) : Int32
+  fun convert_surface = SDL_ConvertSurface(src : Surface*, fmt : PixelFormat*, flags : UInt32) : Surface*
 end

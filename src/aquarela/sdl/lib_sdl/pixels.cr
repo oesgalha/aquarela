@@ -1,4 +1,3 @@
-@[Link("SDL2")]
 lib LibSDL
   struct Color
     r, g, b, a : UInt8

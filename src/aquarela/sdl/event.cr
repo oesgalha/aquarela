@@ -1,27 +1,19 @@
-require "./lib_sdl/event"
+require "./lib_sdl"
 
 module SDL
   struct Event
 
-    @event : LibSDL::Event | Nil
+    @event : LibSDL::Event
 
     def initialize(@event)
     end
 
     def self.pool
-      if LibSDL.pool_event(out event) == 1
-        return Event.new(event)
-      else
-        return Event.new(nil)
-      end
+      LibSDL.pool_event(out event) == 1 ? Event.new(event) : nil
     end
 
     def quit?
-      has_type?(LibSDL::EventType::QUIT)
-    end
-
-    def has_type?(ev_type)
-      (event = @event).responds_to?(:ev_type) && event.ev_type == ev_type
+      @event.ev_type == LibSDL::EventType::QUIT
     end
   end
 end

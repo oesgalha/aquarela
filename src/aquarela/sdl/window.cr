@@ -1,8 +1,10 @@
-require "./lib_sdl/video"
-require "./surface"
+require "./lib_sdl"
 
 module SDL
   class Window
+
+    @@main : SDL::Window | Nil
+
     def initialize(@title : String, @width : Int32, @height : Int32)
       @window = LibSDL.create_window(
           @title,
@@ -14,8 +16,16 @@ module SDL
       )
     end
 
+    def self.main
+      @@main
+    end
+
+    def self.main=(window)
+      @@main = window
+    end
+
     def surface
-      @surface ||= Surface.from_window(@window)
+      @surface ||= SDL::Surface.from_window(@window)
     end
 
     def update

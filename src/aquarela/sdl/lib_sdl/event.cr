@@ -1,4 +1,3 @@
-@[Link("SDL2")]
 lib LibSDL
 
   enum EventType

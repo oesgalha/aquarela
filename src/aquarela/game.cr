@@ -1,30 +1,34 @@
-require "./sdl/lib_sdl/main"
-require "./sdl/window"
-require "./sdl/time"
-require "./sdl/event"
+require "./sdl"
 
 module Aquarela
   class Game
     def initialize(title, width, height)
-      LibSDL.init(LibSDL::INIT_VIDEO)
+      SDL.init!
       @window = SDL::Window.new(title, width, height)
+      SDL::Window.main = @window
     end
 
     def run
       loop do
-        @window.surface.fill(rand(255), rand(255), rand(255))
-        case event = SDL::Event.pool
-        when .quit?
-          exit
-        end
+        yield
+        handle_events
         @window.update
         wait 100
       end
     end
 
+    def handle_events
+      while !(event = SDL::Event.pool).nil?
+        case event
+        when .quit?
+          exit
+        end
+      end
+    end
+
     def finalize
       @window.finalize
-      LibSDL.quit
+      SDL.finalize
     end
   end
 end
