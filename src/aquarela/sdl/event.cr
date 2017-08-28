@@ -1,26 +1,27 @@
 require "./lib_sdl/event"
 
 module SDL
-  module Event
-    struct CommonEvent
-      property event : LibSDL::Event
+  struct Event
 
-      def initialize(@event : LibSDL::Event)
-      end
+    @event : LibSDL::Event | Nil
 
-      def quit?
-        @event.ev_type == LibSDL::EventType::QUIT
-      end
+    def initialize(@event)
     end
 
     def self.pool
-      puts "eita"
-      if LibSDL.pool_event(out event) != 0
-        puts "woop woop"
-        return CommonEvent.new(event)
+      if LibSDL.pool_event(out event) == 1
+        return Event.new(event)
       else
-        puts "oh damn"
+        return Event.new(nil)
       end
+    end
+
+    def quit?
+      has_type?(LibSDL::EventType::QUIT)
+    end
+
+    def has_type?(ev_type)
+      (event = @event).responds_to?(:ev_type) && event.ev_type == ev_type
     end
   end
 end
