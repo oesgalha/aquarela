@@ -1,4 +1,3 @@
-[submodule "crystal-win"]
-	path = crystal-win
-	url = https://github.com/oprypin/crystal
-	branch = win
+[submodule "crystal"]
+	path = crystal
+	url = https://github.com/crystal-lang/crystal.git
