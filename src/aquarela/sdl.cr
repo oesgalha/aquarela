@@ -1,6 +1,1 @@
-require "./sdl/event"
-require "./sdl/image"
-require "./sdl/main"
-require "./sdl/surface"
-require "./sdl/time"
-require "./sdl/window"
+require "./multimedia/sdl"

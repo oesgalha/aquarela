@@ -7,3 +7,4 @@ lib LibIMG
   fun load = IMG_Load(file : UInt8*) : LibSDL::Surface*
   fun quit = IMG_Quit()
 end
+

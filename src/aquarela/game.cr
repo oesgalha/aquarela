@@ -5,7 +5,6 @@ module Aquarela
     def initialize(title, width, height)
       SDL.init!
       @window = SDL::Window.new(title, width, height)
-      SDL::Window.main = @window
     end
 
     def run
@@ -13,7 +12,7 @@ module Aquarela
         yield
         handle_events
         @window.update
-        wait 100
+        wait 100_u32
       end
     end
 
