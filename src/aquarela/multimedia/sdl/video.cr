@@ -27,12 +27,28 @@ end
 
 module SDL
   class Window
+
+    @@main : SDL::Window?
+
     def initialize(@title : String, @width : Int32, @height : Int32)
       @window_ptr = LibSDL.create_window(@title, LibSDL::WindowPos::Undefined, LibSDL::WindowPos::Undefined, @width, @height, 0)
     end
 
     def surface
       @surface ||= Surface.from_window(@window_ptr)
+    end
+
+    def self.main=(window)
+      @@main = window
+    end
+
+    def self.main : SDL::Window
+      if (window = @@main).nil?
+        raise "This won't happen"
+        Window.new("Dead code running", 0, 0)
+      else
+        window
+      end
     end
 
     def update

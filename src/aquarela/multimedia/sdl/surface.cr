@@ -33,6 +33,10 @@ module SDL
       LibSDL.fill_rect(@surface, nil, LibSDL.map_rgb(@surface.value.format, r, g, b))
     end
 
+    def fill_rect(r, g, b, rect)
+      LibSDL.fill_rect(@surface, rect, LibSDL.map_rgb(@surface.value.format, r, g, b))
+    end
+
     def blit(dest : Surface)
       LibSDL.blit_surface(@surface, nil, dest, nil)
     end

@@ -1,7 +1,11 @@
+require "./keyboard"
+
 lib LibSDL
 
   enum EventType
     QUIT = 0x100
+    KEYDOWN = 0x300
+    KEYUP
     USER_EVENT = 0x8000
   end
 
@@ -13,6 +17,17 @@ lib LibSDL
   struct QuitEvent
     ev_type : EventType
     timestamp : UInt32
+  end
+
+  struct KeyboardEvent
+    ev_type : EventType
+    timestamp : UInt32
+    windowID : UInt32
+    state : UInt8
+    repeat : UInt8
+    padding2 : UInt8
+    padding3 : UInt8
+    keysym : Keysym
   end
 
   struct UserEvent
@@ -27,6 +42,7 @@ lib LibSDL
   union Event
     ev_type : EventType
     common : CommonEvent
+    key : KeyboardEvent
     quit : QuitEvent
     user : UserEvent
   end
@@ -44,6 +60,14 @@ module SDL
 
     def self.pool
       LibSDL.pool_event(out event) == 1 ? Event.new(event) : nil
+    end
+
+    def key
+      @event.key.keysym.sym
+    end
+
+    def keydown?
+      @event.ev_type == LibSDL::EventType::KEYDOWN
     end
 
     def quit?
